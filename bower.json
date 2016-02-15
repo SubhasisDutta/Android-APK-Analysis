@@ -1,0 +1,25 @@
+{
+  "name": "multivision",
+  "description": "practice training",
+  "main": "index.js",
+  "authors": [
+    "subhasis"
+  ],
+  "license": "ISC",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node",
+    "yui"
+  ],
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "jquery": "^2.2.0",
+    "AngularJS-Toaster": "toaster#^1.1.0",
+    "angular": "^1.5.0",
+    "angular-resource": "^1.5.0",
+    "angular-route": "^1.5.0"
+  }
+}
