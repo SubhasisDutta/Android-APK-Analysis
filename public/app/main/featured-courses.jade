@@ -1,0 +1,6 @@
+.panel.panel-primary
+  .panel-heading.text-center Featured Courses
+  .panel-body
+    .row(ng-repeat="course in courses | filter:{featured:true}")
+      .col-md-12
+        a(href="/courses/{{course._id}}") {{course.title}}
