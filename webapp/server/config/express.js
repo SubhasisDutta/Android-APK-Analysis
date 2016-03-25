@@ -21,6 +21,15 @@ module.exports = function(app, config) {
   app.use(session({secret: 'multi vision unicorns',resave:false,saveUninitialized:false}));
   app.use(passport.initialize());
   app.use(passport.session());
+
+  //added for file upload
+  /*app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });*/
+
+
   app.use(stylus.middleware(
     {
       src: config.rootPath + '/public',

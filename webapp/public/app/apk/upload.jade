@@ -1,0 +1,19 @@
+.container
+  .well
+    form.form-horizontal(name="apkUploadForm")
+      fieldset
+        legend APK Upload
+        .form-group
+          label.col-md-2.control-label(for="file") File Upload
+          .col-md-10
+            input(type='file', ngf-select='', ng-model='upload.file', name='file', ngf-max-size='20MB')
+            i(ng-show='apkUploadForm.file.$error.required') *required
+            br
+            span.progress(ng-show='upload.file.progress >= -1')
+              div(style='width:{{upload.file.progress}}%', ng-bind="upload.file.progress + '%'")
+        .form-group
+          .col-md-10.col-md-offset-2
+            .pull-right
+              button.btn.btn-primary(ng-click="apkUpload(upload.file)") Upload
+              | &nbsp;
+              a.btn.btn-default(href="/") Cancel

@@ -1,4 +1,4 @@
-angular.module('app', ['ngResource', 'ngRoute']);
+angular.module('app', ['ngResource', 'ngRoute','ngFileUpload']);
 
 angular.module('app').config(function($routeProvider, $locationProvider) {
   var routeRoleChecks = {
@@ -18,6 +18,9 @@ angular.module('app').config(function($routeProvider, $locationProvider) {
       })
       .when('/signup', { templateUrl: '/partials/account/signup',
         controller: 'mvSignupCtrl'
+      })
+      .when('/apk/upload', { templateUrl: '/partials/apk/upload',
+          controller: 'mvApkUploadCtrl'
       })
       .when('/profile', { templateUrl: '/partials/account/profile',
         controller: 'mvProfileCtrl', resolve: routeRoleChecks.user

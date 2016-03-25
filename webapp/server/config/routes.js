@@ -1,8 +1,10 @@
 var auth = require('./auth'),
   users = require('../controllers/users'),
+  apkFile = require('../controllers/apkFile'),
   courses = require('../controllers/courses'),
   mongoose = require('mongoose'),
   User = mongoose.model('User');
+
 
 module.exports = function(app) {
 
@@ -12,6 +14,8 @@ module.exports = function(app) {
 
   app.get('/api/courses', courses.getCourses);
   app.get('/api/courses/:id', courses.getCourseById);
+
+  app.post('/api/apk/upload', apkFile.uploadApk);
 
   app.get('/partials/*', function(req, res) {
     res.render('../../public/app/' + req.params[0]);
