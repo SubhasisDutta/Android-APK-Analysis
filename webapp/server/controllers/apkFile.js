@@ -2,6 +2,7 @@
  * Created by Subhasis on 3/25/2016.
  */
 var multer = require('multer');
+var shell = require('shelljs');
 
 exports.uploadApk = function(req, res) {
     /*Course.findOne({_id:req.params.id}).exec(function(err, course) {
@@ -12,7 +13,6 @@ exports.uploadApk = function(req, res) {
             cb(null, 'C:\\Workspace\\Github\\AndroidAPKAnalysis\\webapp\\upload');
         },
         filename: function (req, file, cb) {
-            console.log("fdfd");
             var datetimestamp = Date.now();
             var fileName=file.originalname.split('.')[0] + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1];
             cb(null, fileName);
@@ -24,13 +24,24 @@ exports.uploadApk = function(req, res) {
 
     upload(req,res,function(err){
         //console.log(req);
+        //trigerFileProcessing();
         if(err){
-            res.json({error_code:1,err_desc:err});
+            res.json({error_code:500,err_desc:err});
             return;
         }
-        res.json({error_code:0,err_desc:"File Uploaded Successfully."});
+        res.json({error_code:200,err_desc:"File Uploaded Successfully."});
     });
+};
+exports.startTrigger = function(req, res){
+    trigerFileProcessing();
+    res.json({error_code:200,err_desc:"Trigger Started Successfully."});
+}
 
+function trigerFileProcessing(){
+    shell.echo('hello world');
+    shell.echo(process.cwd());
+    shell.cd(process.cwd());
+    console.log(shell.ls());
 
-
+    //shell.ls('./');
 }

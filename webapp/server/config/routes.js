@@ -16,6 +16,7 @@ module.exports = function(app) {
   app.get('/api/courses/:id', courses.getCourseById);
 
   app.post('/api/apk/upload', apkFile.uploadApk);
+  app.get('/api/apk/trigger',apkFile.startTrigger);
 
   app.get('/partials/*', function(req, res) {
     res.render('../../public/app/' + req.params[0]);

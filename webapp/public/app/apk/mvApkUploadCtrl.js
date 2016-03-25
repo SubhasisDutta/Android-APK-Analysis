@@ -1,4 +1,5 @@
-angular.module('app').controller('mvApkUploadCtrl', function($scope, mvUser, mvNotifier, $location, mvAuth, Upload, $timeout) {
+angular.module('app').controller('mvApkUploadCtrl', function($scope, mvUser, mvNotifier, $location,
+                                                             mvAuth, Upload, $timeout,$resource) {
 
   $scope.apkUpload = function(file) {
     file.upload = Upload.upload({
@@ -7,11 +8,11 @@ angular.module('app').controller('mvApkUploadCtrl', function($scope, mvUser, mvN
     });
 
     file.upload.then(function (response) {
+        mvNotifier.notify(response.data.err_desc);
       $timeout(function () {
         file.result = response.data;
       });
     }, function (response) {
-        console.log(response);
       if (response.status > 0)
         $scope.errorMsg = response.status + ': ' + response.data;
     }, function (evt) {
@@ -33,4 +34,10 @@ angular.module('app').controller('mvApkUploadCtrl', function($scope, mvUser, mvN
       mvNotifier.error(reason);
     })*/
   }
+  $scope.triggerProcessing = function(){
+      var trigger = $resource("/api/apk/trigger");
+      $scope.trigger = trigger.get(function(response){
+          mvNotifier.notify(response.err_desc);
+      });
+  };
 });
