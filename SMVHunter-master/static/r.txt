@@ -1,0 +1,27 @@
+if-eqz p, :cond
+const/4 v, 0x0
+aget-object v, p, v
+invoke-virtual {v}, Ljava/security/cert/X509Certificate;->checkValidity()V
+:cond
+==============================
+if-eqz p, :cond
+array-length v, p
+const/4 v, 0x1
+if-ne v, v, :cond
+const/4 v, 0x0
+aget-object v, p, v
+invoke-virtual {v}, Ljava/security/cert/X509Certificate;->checkValidity()V
+:goto
+==============================
+const-string v, "SSLImplJava"
+const-string v, "checkServerTrusted"
+invoke-static {v, v}, Lcom/rhomobile/rhodes/Logger;->T(Ljava/lang/String;Ljava/lang/String;)V
+==============================
+const/4 v, 0x0
+:goto
+array-length v, p
+if-ge v, v, :cond
+aget-object v, p, v
+invoke-virtual {v}, Ljava/security/cert/X509Certificate;->checkValidity()V
+add-int/lit8 v, v, 0x1
+goto :goto

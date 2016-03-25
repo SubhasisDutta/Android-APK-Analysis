@@ -1,0 +1,6 @@
+0_id=twit_reply_field|false
+0_id=edtextadres|false,0_text=,1_id=textView1|false,1_text=Send to:
+0_id=edtextsubject|false,0_text=,1_id=textView2|false,1_text=Subject: 
+0_id=edtexttext|false
+0_id=twit_login_field|false,1_text=Login:
+0_id=twit_pass_field|false,0_password=true,1_text=Password:

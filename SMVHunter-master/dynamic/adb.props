@@ -1,0 +1,11 @@
+adb_location=/usr/bin/adb
+root_dir=/location/for/folder/containing/apk/files/
+db_location=/location/of/SMVHunter/folder/static/output.db
+smart_input_location=/location/of/SMVHunter/folder/smart_input_generation/smartInput.db
+restart=/location/of/SMVHunter/folder/dynamic/startgoogle.sh %s
+x=480
+y=800
+udp_dump_location=/location/of/SMVHunter/folder/correlative_analysis/udpdump.txt
+log_cat_location=/location/of/SMVHunter/folder/correlative_analysis/logcat.txt
+strace_output_location=/location/of/SMVHunter/folder/correlative_analysis/strace_out.txt
+strace_dump_location=/location/of/SMVHunter/folder/correlative_analysis/strace_dump.txt

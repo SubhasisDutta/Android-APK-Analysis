@@ -1,0 +1,21 @@
+extends ../includes/layout
+
+block main-content
+  .navbar.navbar-inverse.navbar-fixed-top
+    .container
+      .navbar-header
+        a.navbar-brand(href="/") Android APK Analysis
+          h6 -Android APK Analysis
+      .navbar-collapse.collapse
+        ul.nav.navbar-nav
+          li
+            a(href="/") Home
+          li
+            a(href="/courses") App List
+        div(ng-include="'/partials/account/navbar-login'")
+
+  section.content
+    div(ng-view)
+
+  footer.container.text-center
+    p &copy; 2016 Android APK Analysis.
