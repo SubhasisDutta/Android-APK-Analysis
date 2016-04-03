@@ -10,6 +10,7 @@ exports.uploadApk = function(req, res) {
     })*/
     var storage = multer.diskStorage({ //multers disk storage settings
         destination: function (req, file, cb) {
+            //cb(null, '/home/bitnami/apps/AndroidAPKAnalysis/webapp/upload');
             cb(null, 'C:\\Workspace\\Github\\AndroidAPKAnalysis\\webapp\\upload');
         },
         filename: function (req, file, cb) {
