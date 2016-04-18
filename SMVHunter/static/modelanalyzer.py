@@ -74,10 +74,10 @@ def check_model(code_block, file_name):
     return vuln
 
 #input : path from mfg_generator.py
-def analyze_file(file_name):
+def analyze_file(file_name,r_model_location):
     #initialize all vulnerable model in models
     
-    populate_model()
+    populate_model(r_model_location)
 
     #read all the contents
     f_content = open(file_name).read()
@@ -90,9 +90,9 @@ def analyze_file(file_name):
             return True
     return False
 
-def populate_model():
+def populate_model(r_model_location):
     #read the vulnerable models
-    for model in open("./r.txt").read().split("="*30):
+    for model in open(r_model_location+"/r.txt").read().split("="*30):
         models.append(model.strip().replace("\n", ""))
 	
 

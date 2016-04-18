@@ -6,7 +6,11 @@ module.exports = {
     db: 'mongodb://localhost/apkanalysis',
     rootPath: rootPath,
     port: process.env.PORT || 3030,
-    uploadAPKLocation: 'C:\\Workspace\\Github\\AndroidAPKAnalysis\\webapp\\upload'
+    uploadAPKLocation: 'C:\\FileRepo\\apkupload',
+    apkTool: 'C:\\Workspace\\Github\\AndroidAPKAnalysis\\apktool\\apktool',
+    apkDecompileLocation: 'C:\\FileRepo\\apkupload',//'C:\\FileRepo\\apkdecompile',
+    SA_script_location: 'C:\\Workspace\\Github\\AndroidAPKAnalysis\\SMVHunter\\static',
+    SA_output_location: 'C:\\FileRepo\\saoutput'
   },
   production: {
     rootPath: rootPath,

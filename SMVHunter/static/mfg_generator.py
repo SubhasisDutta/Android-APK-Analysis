@@ -58,7 +58,7 @@ def find(regex, string):
     return re.search(regex, string).groups(0)[0]
 
 #input : path of smali file
-def parse_sfile(path):
+def parse_sfile(path,r_model_location):
     f_content = open(path).read()
     class_name = find("\.class(.*)", f_content).split()[-1]
     methods = re.findall(r"\.method.*?\.end method", f_content, re.S)
@@ -75,7 +75,7 @@ def parse_sfile(path):
         if trustmanager and "init" in key:
             TM.append(key)
             #check if the class is vulnerable if so add it to the seed
-            if modelanalyzer.analyze_file(path):
+            if modelanalyzer.analyze_file(path,r_model_location):
                 SEEDS.append(key)
             else:
                 print "file not vulnerable %s" % path
@@ -114,7 +114,7 @@ def parse_methods():
                     node.add_child(t_inv)
             NODES[meth_name] = node
 
-def traverse(apk, seed, node, seen):
+def traverse(apk,destination_file, seed, node, seen):
     #print "node %s %s %s" % (node, node.parents, seen)
 
     #this will handle the case where we register callbacks to the jvm like
@@ -127,19 +127,19 @@ def traverse(apk, seed, node, seen):
             if "init" in meth_nm and meth_nm in NODES and meth_nm not in seen:
 		#method is never called. Continue traversing from its class' constructor
                 seen.add(meth_nm)
-                traverse(apk, seed, NODES[meth_nm], seen)
+                traverse(apk,destination_file, seed, NODES[meth_nm], seen)
             elif meth_nm in seen:
 		# method is a constructor that is never called; report it as an entry point
-                find_key_from_xml(apk, seed, meth_nm)
+                find_key_from_xml(apk,destination_file, seed, meth_nm)
     else:
         for parent in node.parents:
             p_node = NODES[parent]
-            traverse(apk, seed, p_node, seen)
+            traverse(apk,destination_file, seed, p_node, seen)
 
 #Output
 #sample format
 #Lcom/chase/sig/android/activity/BillPayPayeeAddVerifyActivity$a;-><init>()V
-def find_key_from_xml(apk, seed, meth_nm):
+def find_key_from_xml(apk,destination_file, seed, meth_nm):
     #format the meth name to make fully qualified name
     #replace the L in the start
     meth_nm = re.sub("^L", "", meth_nm)
@@ -153,12 +153,12 @@ def find_key_from_xml(apk, seed, meth_nm):
         if meth_nm in k and meth_nm not in RESULT:
             RESULT[meth_nm] = v
             print "result== ", apk, seed, meth_nm, v
-            insert_data(apk, seed, meth_nm, v)
+            insert_data(apk,destination_file, seed, meth_nm, v)
 
 
 #write data to db_location file
-def insert_data(apk, seed, meth_nm, v):
-    with open('output.db','a') as f:
+def insert_data(apk,destination_file, seed, meth_nm, v):
+    with open(destination_file,'a+') as f:
 	f.write(apk + ' ' + seed + ' ' + meth_nm + ' ' + v + '\n')
     f.closed
 
@@ -183,13 +183,13 @@ def parse_android_xml(root):
                     v = "%s%s" % (package, v)
                 MANIFEST[v] = child.tag
 	    	
-def process_apk(root):
+def process_apk(root,r_model_location):
     for path, folders, files in os.walk(root):
         for file in files:
             if file.endswith(".smali") and not re.match("R\$.*", file):
                 f_path = os.path.join(path, file)
                 #now create the dict
-                parse_sfile(f_path)
+                parse_sfile(f_path,r_model_location)
     
     #build MCG tree
     parse_methods()
@@ -199,20 +199,24 @@ def process_apk(root):
 if __name__ == '__main__':
     #root as the decoded path
     root = sys.argv[1]
+    destination_file = sys.argv[2]
+    r_model_location = sys.argv[3]
+    print "APK Folder ",root
+    print "Output Destination ",destination_file
+    print "R model",r_model_location
     
     parse_android_xml(root)
-    process_apk(root)
-
-    print
+    process_apk(root,r_model_location)
+    
     print "%d TM and SEED %d apk %s"  % (len(TM), len(SEEDS), root)
-    print
+    
 
     #yay result.. :p
     for seed in SEEDS:
         print "seed %s" % seed
         node = NODES[seed]
         print node, root
-        traverse(root, seed, node, set())
+        traverse(root,destination_file, seed, node, set())
 
 
 

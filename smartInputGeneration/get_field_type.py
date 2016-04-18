@@ -47,6 +47,7 @@ class GetFieldType:
 
         
         # analyze the dex file
+        print "From LOCATION = ",self.apk
         self.a = APK(self.apk)
 
         # get the vm analysis
@@ -537,6 +538,7 @@ def start():
                         default=0, help="increase output verbosity")
 
     args = parser.parse_args()
+    print args	
     gft = GetFieldType(args)
 
     args.func(gft)
