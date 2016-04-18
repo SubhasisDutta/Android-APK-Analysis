@@ -19,7 +19,7 @@ module.exports = function(app) {
 
   app.get('/api/userapps',auth.requiresApiLogin, appsController.getAppsByUserName);
   app.get('/api/apps', auth.requiresRole('admin'), appsController.getAllApps);
-  app.post('/api/startAnalysis',appsController.startTrigger);
+  app.post('/api/startAnalysis',auth.requiresApiLogin,appsController.startTrigger);
 
   app.get('/partials/*', function(req, res) {
     res.render('../../public/app/' + req.params[0]);

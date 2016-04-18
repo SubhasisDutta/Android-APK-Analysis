@@ -1,3 +1,5 @@
+var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+var config = require('../config/config')[env];
 var Apk = require('mongoose').model('Apk');
 var shell = require('shelljs');
 
@@ -47,15 +49,24 @@ exports.createAPKRecord = function(fileName,userName) {
 
 
 exports.startTrigger = function(req, res){
-    trigerFileProcessing();
+    trigerFileProcessing(req.body.file_id);
     res.json({error_code:200,err_desc:"Trigger Started Successfully."});
 }
 
-function trigerFileProcessing(){
+function trigerFileProcessing(file_id){
+    console.log(file_id);
     shell.echo('hello world');
     shell.echo(process.cwd());
     shell.cd(process.cwd());
-    console.log(shell.ls());
+    //console.log(shell.ls());
 
     //shell.ls('./');
+}
+
+function updateSAinDB(id,status,report){
+    //update SA in Database
+}
+
+function updateSIGinDB(id,status,report){
+    //update SIG in Database
 }
