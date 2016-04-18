@@ -1,4 +1,8 @@
-.container
+.container(ng-hide="identity.isAuthenticated()")
+  .jumbotron
+    h1 Android APK Analysis
+    p Please Log IN to upload Files.
+.container(ng-show="identity.isAuthenticated()")
   .well
     form.form-horizontal(name="apkUploadForm")
       fieldset
@@ -15,7 +19,5 @@
           .col-md-10.col-md-offset-2
             .pull-right
               button.btn.btn-primary(ng-click="apkUpload(upload.file)") Upload
-              | &nbsp;
-              button.btn.btn-primary(ng-click="triggerProcessing()") Trigger
               | &nbsp;
               a.btn.btn-default(href="/") Cancel

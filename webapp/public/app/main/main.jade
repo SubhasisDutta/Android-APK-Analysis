@@ -3,8 +3,8 @@
     h1 Android APK Analysis
     p Welcome to Android APK Analysis! The most comprehensive and complete tool for performing static and dynamic analysis of Android Apps.
 
-  .row
+  .row(ng-show="identity.isAuthenticated()")
     .col-md-6
-      <!--div(ng-include="'/partials/main/featured-courses'")-->
+      a.btn.btn-primary(href="/apps",style="width: 100%;margin-bottom: 10px;") See APK Analysis Reports
     .col-md-6
-      <!--div(ng-include="'/partials/main/new-courses'")-->
+      a.btn.btn-primary(href="/apk/upload",style="width: 100%;margin-bottom: 10px;") Upload APK to Analyze

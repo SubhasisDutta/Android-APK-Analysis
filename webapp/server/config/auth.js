@@ -5,7 +5,7 @@ exports.authenticate = function(req, res, next) {
   var auth = passport.authenticate('local', function(err, user) {
     if(err) {return next(err);}
     if(!user) { res.send({success:false})}
-    req.logIn(user, function(err) {
+    req.logIn(user, function(err) { //creates a session for the user
       if(err) {return next(err);}
       res.send({success:true, user: user});
     })
@@ -32,3 +32,19 @@ exports.requiresRole = function(role) {
     }
   }
 }
+
+exports.getLoginUser = function(req,res){
+  if(!req.isAuthenticated()) {
+    res.send(req.user);
+  }else{
+    res.send('0');
+  }
+};
+
+exports.getCurrentUserInfo = function(req){
+    if(!req.isAuthenticated()) {
+        return req.user;
+    }else{
+        return '0';
+    }
+};

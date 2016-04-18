@@ -8,7 +8,7 @@ var courseSchema = mongoose.Schema({
 });
 var Course = mongoose.model('Course', courseSchema);
 
-function createDefaultCourses() {
+/*function createDefaultCourses() {
   Course.find({}).exec(function(err, collection) {
     if(collection.length === 0) {
       Course.create({title: 'C# for Sociopaths', featured: true, published: new Date('10/5/2013'), tags: ['C#']});
@@ -28,6 +28,6 @@ function createDefaultCourses() {
       Course.create({title: 'Death March Coding for Fun and Profit', featured: true, published: new Date('7/1/2013'), tags: ['Coding', 'Misc']});
     }
   })
-}
+}*/
 
-exports.createDefaultCourses = createDefaultCourses;
+//exports.createDefaultCourses = createDefaultCourses;
