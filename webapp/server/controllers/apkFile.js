@@ -2,7 +2,6 @@
  * Created by Subhasis on 3/25/2016.
  */
 var multer = require('multer');
-var shell = require('shelljs');
 //var auth = require('../config/auth');
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('../config/config')[env];
@@ -71,16 +70,3 @@ exports.uploadApk = function(req, res) {
         res.json({code:200,err_desc:"File Uploaded Successfully."});
     });
 };
-exports.startTrigger = function(req, res){
-    trigerFileProcessing();
-    res.json({error_code:200,err_desc:"Trigger Started Successfully."});
-}
-
-function trigerFileProcessing(){
-    shell.echo('hello world');
-    shell.echo(process.cwd());
-    shell.cd(process.cwd());
-    console.log(shell.ls());
-
-    //shell.ls('./');
-}

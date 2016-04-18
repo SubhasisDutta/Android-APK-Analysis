@@ -1,4 +1,6 @@
 var Apk = require('mongoose').model('Apk');
+var shell = require('shelljs');
+
 
 exports.getAllApps = function(req, res) {
     Apk.find({}).exec(function(err, collection) {
@@ -7,16 +9,17 @@ exports.getAllApps = function(req, res) {
 };
 
 exports.getAppsByUserName = function(req, res) {
-    Apk.find({username:req.params.username}).exec(function(err, collection) {
+    var curentUserName = req.user.username;
+    Apk.find({username:curentUserName}).exec(function(err, collection) {
         res.send(collection);
     });
 }
 
-exports.getAppsById = function(req, res) {
+/*exports.getAppsById = function(req, res) {
     Apk.findOne({_id:req.params.id}).exec(function(err, app) {
         res.send(app);
     });
-}
+}*/
 
 /*
 exports.createAPKRecord = function(fileName,userName) {
@@ -38,3 +41,18 @@ exports.createAPKRecord = function(fileName,userName) {
         })
     })
 };*/
+
+
+exports.startTrigger = function(req, res){
+    trigerFileProcessing();
+    res.json({error_code:200,err_desc:"Trigger Started Successfully."});
+}
+
+function trigerFileProcessing(){
+    shell.echo('hello world');
+    shell.echo(process.cwd());
+    shell.cd(process.cwd());
+    console.log(shell.ls());
+
+    //shell.ls('./');
+}

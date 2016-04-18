@@ -1,6 +1,7 @@
 var auth = require('./auth'),
   users = require('../controllers/users'),
   apkFile = require('../controllers/apkFile'),//courses = require('../controllers/courses'),
+  appsController = require('../controllers/appsController'),
   mongoose = require('mongoose');
   //User = mongoose.model('User');
 
@@ -15,7 +16,11 @@ module.exports = function(app) {
   //app.get('/api/courses/:id', courses.getCourseById);
 
   app.post('/api/apk/upload',auth.requiresApiLogin, apkFile.uploadApk);
-  app.get('/api/apk/trigger',auth.requiresApiLogin, apkFile.startTrigger);
+
+  app.get('/api/apk/trigger',auth.requiresApiLogin, appsController.startTrigger);
+
+  app.get('/api/userapps',auth.requiresApiLogin, appsController.getAppsByUserName);
+  app.get('/api/apps', auth.requiresRole('admin'), appsController.getAllApps);
 
   app.get('/partials/*', function(req, res) {
     res.render('../../public/app/' + req.params[0]);
