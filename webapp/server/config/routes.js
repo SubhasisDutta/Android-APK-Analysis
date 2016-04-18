@@ -17,10 +17,9 @@ module.exports = function(app) {
 
   app.post('/api/apk/upload',auth.requiresApiLogin, apkFile.uploadApk);
 
-  app.get('/api/apk/trigger',auth.requiresApiLogin, appsController.startTrigger);
-
   app.get('/api/userapps',auth.requiresApiLogin, appsController.getAppsByUserName);
   app.get('/api/apps', auth.requiresRole('admin'), appsController.getAllApps);
+  app.post('/api/startAnalysis',appsController.startTrigger);
 
   app.get('/partials/*', function(req, res) {
     res.render('../../public/app/' + req.params[0]);

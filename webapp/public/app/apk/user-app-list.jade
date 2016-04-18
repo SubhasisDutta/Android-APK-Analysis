@@ -13,9 +13,23 @@
     thead
       tr
         th Title
-        th Publish Date
+        th Upload Date
+        th Trigger
+        th Static Analysis Report
+        th Smart Input Generation Report
     tbody
-      tr(ng-repeat="course in courses | filter:searchText | orderBy:sortOrder")
-        td
-          a(href="/courses/{{course._id}}") {{course.title}}
-        td {{course.published | date}}
+      tr(ng-repeat="userapp in userApps | filter:searchText | orderBy:sortOrder")
+          td {{userapp.title}}
+          td {{userapp.uploaded_on | date}}
+          td(ng-if="userapp.isSA_done === false || userapp.isSIG_done === false ")
+              button.btn.btn-primary(ng-click="triggerProcess(userapp._id)") Analyze
+          td(ng-if="userapp.isSA_done === true && userapp.isSIG_done === true ")
+          | &nbsp;
+          td(ng-if="userapp.isSA_done === true")
+             a(href="/courses/{{userapp._id}}") View
+          td(ng-if="userapp.isSA_done !== true")
+          | &nbsp;
+          td(ng-if="userapp.isSIG_done === true")
+             a(href="/courses/{{userapp._id}}") View
+          td(ng-if="userapp.isSIG_done !== true")
+          | &nbsp;

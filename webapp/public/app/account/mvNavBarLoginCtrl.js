@@ -4,6 +4,7 @@ angular.module('app').controller('mvNavBarLoginCtrl', function($scope, $http, mv
     mvAuth.authenticateUser(username, password).then(function(success) {
       if(success) {
         mvNotifier.notify('You have successfully signed in!');
+          $location.path('/');
       } else {
         mvNotifier.notify('Username/Password combination incorrect');
       }

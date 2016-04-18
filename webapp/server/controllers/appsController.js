@@ -9,8 +9,11 @@ exports.getAllApps = function(req, res) {
 };
 
 exports.getAppsByUserName = function(req, res) {
+
     var curentUserName = req.user.username;
+    //console.log(curentUserName);
     Apk.find({username:curentUserName}).exec(function(err, collection) {
+        //console.log(collection);
         res.send(collection);
     });
 }

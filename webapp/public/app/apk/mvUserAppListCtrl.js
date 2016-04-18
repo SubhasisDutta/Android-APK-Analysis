@@ -1,8 +1,27 @@
-angular.module('app').controller('mvUserAppListCtrl', function($scope,mvIdentity) {
-  $scope.identity = mvIdentity;
+angular.module('app').controller('mvUserAppListCtrl', function($scope,mvIdentity,$resource,mvNotifier,$location) {
+  $scope.userApps =[];
   //$scope.courses = mvCachedCourses.query();
+  //console.log(mvIdentity);
+  if(mvIdentity.currentUser !== undefined) {
+      $scope.identity = mvIdentity;
+      var userApps =  $resource("/api/userapps");
+      $scope.userApps = userApps.query();
+  }
+  //console.log($scope.userApps) ;
 
-  $scope.sortOptions = [{value:"title",text: "Sort by Title"},
-    {value: "published",text: "Sort by Publish Date"}];
+  $scope.sortOptions = [ {value: "-uploaded_on",text: "Sort by Upload Date"},
+      {value:"title",text: "Sort by Title"}];
   $scope.sortOrder = $scope.sortOptions[0].value;
+
+
+  $scope.triggerProcess = function(id){
+     //console.log(id);
+      var startAnalysis = $resource("/api/startAnalysis");
+      var response = startAnalysis.save({file_id:id},function(){
+          //console.log(response);
+          mvNotifier.notify("The Analysis of the APK file is in Progress. Please wait for some time for the results.");
+          $location.url('/');
+      });
+
+  };
 });

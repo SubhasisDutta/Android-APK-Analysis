@@ -16,7 +16,7 @@ angular.module('app').controller('mvApkUploadCtrl', function($scope, mvUser, mvN
             }
             if(response.data.code === 200){
                 mvNotifier.notify(response.data.err_desc);
-                $location.path('/apps')
+                $location.path('/apps');
             }
         }
       $timeout(function () {
