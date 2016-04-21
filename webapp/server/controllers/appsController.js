@@ -98,7 +98,7 @@ function decompileAPK(file_id){
     var input_file = config.uploadAPKLocation+'/'+file_id+'.apk';
     var output_folder = config.apkDecompileLocation+'/'+file_id;
     var apk_tool = config.apkTool;
-    var command = apk_tool+" d "+input_file+" -fo "+output_folder;
+    var command = apk_tool+" d "+input_file+" -fo "+output_folder; // remove -fo in production and add d -f
     console.log(command);
     const child = exec(command,function(error, stdout, stderr) {
             //console.log("stdout: "+stdout);

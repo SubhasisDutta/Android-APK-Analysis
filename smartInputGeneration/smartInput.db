@@ -1,0 +1,2 @@
+blacknWhite.CallBlocker.Gold.EditGroupActivity;name: EditTextGroupDescription;id: 0x7f0b0005;type: TYPE_CLASS_TEXT;variations: TYPE_TEXT_VARIATION_NORMAL;flags: ;
+blacknWhite.CallBlocker.Gold.EditGroupActivity;name: EditTextGroupName;id: 0x7f0b0004;type: TYPE_CLASS_TEXT;variations: TYPE_TEXT_VARIATION_PERSON_NAME;flags: ;
