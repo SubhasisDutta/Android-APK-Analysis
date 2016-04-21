@@ -1,1 +1,20 @@
-0_hint=searchhint|City, State or Zip,0_id=searchinput|false,0_singleLine=true,1_id=delete|false,1_src=volvo_search_clear
+0_digits=0123456789.,,0_hint=price|Price,0_id=text_Price|false,0_inputType=numberDecimal,1_id=textView_CurrencyPer|false,1_text=currencyPer|%1$s per
+0_hint=categoryName|Category name,0_id=text_Name|false,0_inputType=textVisiblePassword|textCapSentences,0_maxLength=12,1_id=bt_Cancel|false,1_text=cancel|Cancel
+0_hint=listName|List name,0_id=text_Name|false,0_inputType=textVisiblePassword|textCapSentences,0_maxLength=16,1_id=bt_Cancel|false,1_text=cancel|Cancel
+0_enabled=false,0_hint=name|Name,0_id=text_Name|false,0_inputType=textVisiblePassword|textCapSentences,0_maxLength=30,1_id=bt_ParentCategory|false
+0_digits=0123456789.,,0_hint=quantity|Quantity,0_id=QuantityActivity_Text_Quantity|false,0_inputType=numberDecimal,0_maxLength=4,1_id=QuantityActivity_Spinner_Unit|false,1_prompt=selectUnit|Select unit,1_scrollbarSize=17.0sp
+0_hint=note|Note ...,0_id=QuantityActivity_Text_Note|false,0_inputType=textVisiblePassword|textCapSentences,0_maxLength=40,0_maxLines=2,1_id=bt_EraseNote|false
+0_id=text_restorePath|false,0_inputType=textVisiblePassword,1_text=
+0_id=text_savePath|false,0_inputType=textVisiblePassword,1_id=text_SavePathStart|false,1_text=myShopi/
+0_id=text_FirstName|false,0_inputType=textPersonName|textCapSentences,0_maxLength=99,1_text=promo_FirstName
+0_id=text_Name|false,0_inputType=textPersonName|textCapSentences,0_maxLength=99,1_text=promo_Name
+0_id=text_Email|false,0_inputType=textEmailAddress,0_maxLength=99,1_text=promo_Email
+0_id=text_Zip|false,0_inputType=number,0_maxLength=4,1_text=promo_Zip
+0_digits=\ 0123456789,0_id=text_BancAccount1|false,0_inputType=number,0_maxLength=3,1_text=-
+0_digits=\ 0123456789,0_id=text_BancAccount2|false,0_inputType=number,0_maxLength=7,1_text=-
+0_digits=\ 0123456789,0_id=text_BancAccount3|false,0_inputType=number,0_maxLength=2,1_text=-
+0_id=text|false,0_inputType=textVisiblePassword|textCapSentences,1_id=bt_Search|false,1_text=searchWeb|Search
+0_id=Text_Alert_ShoppingList_Name|false,0_inputType=textVisiblePassword|textCapSentences,0_maxLength=16
+0_hint=searchAProduct|Search or add item,0_id=text_Search|false,0_inputType=textVisiblePassword|textCapSentences,0_maxLength=30,0_maxLines=1,1_id=bt_Cancel|false
+0_hint=addressZip|Adresse, code postal, ...,0_id=text_Search|false,0_inputType=textVisiblePassword|textCapSentences,0_maxLength=30,0_singleLine=true,1_id=progress_LocateMe|false
+0_digits=\ 1234567890,0_id=editText_Barcode|false,0_inputType=number,0_maxLength=13,1_text=zxing_barcode_|Barcode :

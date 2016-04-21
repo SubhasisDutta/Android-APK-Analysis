@@ -22,16 +22,17 @@ class Predict_Input:
     output_path = None
     feature_gen = None
     
-    def __init__(self):
+    def __init__(self,output_location,file_identifier):
                 
         self.MODEL_FILE = os.path.join(os.path.dirname(__file__),'complex.RandomForest.model')
         self.WEKA = os.path.join(os.path.dirname(__file__),'tools/weka-3.6.10.jar')
-        self.feature_gen = Feature_Generator(os.path.join(os.path.dirname(__file__),'arff_output'),  0)
+        arff_path = output_location+'/'+file_identifier+'_arff_output'
+        self.feature_gen = Feature_Generator(arff_path,  0)
             
     weka_output = ''
     ids = []
             
-    def predict(self, apk_filename, output_path):
+    def predict(self, apk_filename, output_path, output_location, file_identifier):
         
         if not os.path.exists(apk_filename):
             raise RuntimeError('File does not exist!')
@@ -48,7 +49,7 @@ class Predict_Input:
         print 'Parsing xmls ....'
         
         parser = Android_Layout_Parser()
-        data = parser.process_app(self.output_path)
+        data = parser.process_app(self.output_path,output_location,file_identifier)
                 
         print 'Entries found: ', len(data)
         if len(data) == 0:
@@ -61,7 +62,7 @@ class Predict_Input:
         
         print 'Running weka ... '
         
-        self.weka_output = self.__run_weka__()
+        self.weka_output = self.__run_weka__(output_location, file_identifier)
         print self.weka_output
         weka_output = open(self.output_path + '_weka_output' , 'w')
         weka_output.write(self.weka_output)
@@ -110,12 +111,14 @@ class Predict_Input:
         
         return output_dict     
                     
-    def __run_weka__(self):
+    def __run_weka__(self,output_location, file_identifier):
         #arff_output_file = os.path.join(os.path.dirname(__file__), ('arff_output' + self.ARFF_FILE_POSTFIX))
         os.chdir(os.path.dirname(__file__))
         #print 'CWD: ', os.getcwd()
-        arff_output_file = 'arff_output' + self.ARFF_FILE_POSTFIX
-            
+        # file_path = output_location+'/'+file_identifier
+        arff_output_file = output_location+'/'+file_identifier+'_arff_output' + self.ARFF_FILE_POSTFIX
+        print "Reference loc "+ arff_output_file
+        #arff_output_file = 'arff_output' + self.ARFF_FILE_POSTFIX
         cmd_str =   self.CMD_PREFIX  + '  ' \
                         + os.path.join(os.getcwd(),  self.WEKA) + ' ' \
                         + self.CLASSIFIER + ' ' \

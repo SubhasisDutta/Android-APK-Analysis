@@ -1,6 +1,6 @@
 angular.module('app').controller('mvApkUploadCtrl', function($scope, mvUser, mvNotifier, $location,
                                                              mvIdentity, Upload, $timeout,$resource) {
-    $scope.identity = mvIdentity;
+  $scope.identity = mvIdentity;
   $scope.apkUpload = function(file) {
     file.upload = Upload.upload({
       url: '/api/apk/upload',

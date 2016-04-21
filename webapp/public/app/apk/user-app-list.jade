@@ -26,10 +26,10 @@
           td(ng-if="userapp.isSA_done === true && userapp.isSIG_done === true ")
           | &nbsp;
           td(ng-if="userapp.isSA_done === true")
-             a(href="/courses/{{userapp._id}}") View
+             a(href="/apps/SAreport/{{userapp._id}}") View
           td(ng-if="userapp.isSA_done !== true")
           | &nbsp;
           td(ng-if="userapp.isSIG_done === true")
-             a(href="/courses/{{userapp._id}}") View
+             a(href="/apps/SIGreport/{{userapp._id}}") View
           td(ng-if="userapp.isSIG_done !== true")
           | &nbsp;

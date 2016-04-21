@@ -40,8 +40,13 @@ class GetFieldType:
         
         self.apk = args.apk
         self.verbosity = args.verbosity
+        self.output_location = args.output_location
+        self.file_identifier = args.apk.split('.')[0]
+        self.file_identifier = self.file_identifier[-24:]
 
-        print "Analyzing " + self.apk
+        # print "Analyzing " + self.apk
+        # print " Output Location " + self.output_location
+        # print "File Identifier " + self.file_identifier
         
         
 
@@ -63,8 +68,8 @@ class GetFieldType:
         self.d.create_dref()
         
         print 'CWD: ', os.getcwd()
-        predictor = Predict_Input()
-        self.predictions = predictor.predict(self.apk, self.apk[:-4])
+        predictor = Predict_Input(self.output_location,self.file_identifier)
+        self.predictions = predictor.predict(self.apk, self.apk[:-4],self.output_location,self.file_identifier)
 
         
 
@@ -532,6 +537,7 @@ def start():
     parser = argparse.ArgumentParser(description='TODO')
 
     parser.add_argument('apk', help='The location of the .apk file to analyze')
+    parser.add_argument('output_location', help='The folder location where all output needs to be kept')
     parser.set_defaults(func=GetFieldType.analyze)
 
     parser.add_argument("-v", "--verbosity", action="count",

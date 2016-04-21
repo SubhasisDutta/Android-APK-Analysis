@@ -28,8 +28,11 @@ angular.module('app').config(function($routeProvider, $locationProvider) {
       .when('/apps', { templateUrl: '/partials/apk/user-app-list',
         controller: 'mvUserAppListCtrl'
       })
-      .when('/apps/:id', { templateUrl: '/partials/courses/course-details',
-        controller: 'mvCourseDetailCtrl'
+      .when('/apps/SAreport/:id', { templateUrl: '/partials/apk/sareport-details',
+        controller: 'mvSAReportDetailCtrl'
+      })
+      .when('/apps/SIGreport/:id', { templateUrl: '/partials/apk/sigreport-details',
+          controller: 'mvSIGReportDetailCtrl'
       })
 
 });

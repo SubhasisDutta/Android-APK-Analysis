@@ -25,3 +25,11 @@ angular.module('app').controller('mvUserAppListCtrl', function($scope,mvIdentity
 
   };
 });
+angular.module('app').controller('mvSAReportDetailCtrl', function($scope,$routeParams,$resource) {
+    var report = $resource("/api/sareport/:_id");
+    $scope.report = report.get({_id: $routeParams.id});
+});
+angular.module('app').controller('mvSIGReportDetailCtrl', function($scope,$routeParams,$resource) {
+    var report = $resource("/api/sigreport/:_id");
+    $scope.report = report.get({_id: $routeParams.id});
+});

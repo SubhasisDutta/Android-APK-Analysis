@@ -28,7 +28,7 @@ class Android_Layout_Parser:
     data = []
     res_values_data = {}
     
-    def process_app(self, appdir):
+    def process_app(self, appdir,output_location,file_identifier):
         
         if not os.path.exists(appdir):
             raise RuntimeError('Input path does nor exist: ' + appdir)
@@ -51,9 +51,9 @@ class Android_Layout_Parser:
         for dirpath, dirnames, filenames in os.walk(os.path.join(appdir, 'res/layout')):
             for filename in [f for f in filenames if f.endswith(".xml")]:
                 self.__parse_xml_layout_data__(os.path.join(dirpath, filename))
-        
-        file = codecs.open('data.csv', encoding='utf-8', mode='w')
-        file.write('\n'.join(self.data))
+        file_path = output_location+'/'+file_identifier+'_data.csv'
+        file_obj = codecs.open(file_path, encoding='utf-8', mode='w')
+        file_obj.write('\n'.join(self.data))
         
         return self.data
     

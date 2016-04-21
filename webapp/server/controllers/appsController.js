@@ -33,6 +33,37 @@ exports.startTrigger = function(req, res){
     trigerFileProcessing(req.body.file_id);
     res.json({error_code:200,err_desc:"Trigger Started Successfully."});
 };
+
+exports.getSAReport = function(req,res){
+    Apk.findOne({_id:req.params._id}).exec(function(err, appData) {
+        if(err){
+            res.status(400);
+            return res.send({reason:err.toString()});
+        }
+        var responceObj ={
+            _id: appData._id,
+            title : appData.title,
+            SA_report: appData.SA_report
+        };
+        res.send(responceObj);
+    });
+};
+
+exports.getSIGReport = function(req,res){
+    Apk.findOne({_id:req.params._id}).exec(function(err, appData) {
+        if(err){
+            res.status(400);
+            return res.send({reason:err.toString()});
+        }
+        var responceObj ={
+            _id: appData._id,
+            title : appData.title,
+            SIG_report: appData.SIG_report
+        }
+        res.send(responceObj);
+    });
+};
+
 /*
 
  shell.echo('hello world');
@@ -44,7 +75,7 @@ exports.startTrigger = function(req, res){
 
  */
 function trigerFileProcessing(file_id){
-    console.log(file_id);
+    //console.log(file_id);
     checkIfFileExists(file_id);
 }
 
@@ -53,7 +84,7 @@ function checkIfFileExists(file_id){
     fsExists(path, function(err, result) {
         if (err) throw err; // err will always be null
         if(result){
-            console.log(path+" is present.");
+            //console.log(path+" is present.");
             decompileAPK(file_id);
         }else{
             console.log(path+" is not present.");
@@ -70,8 +101,8 @@ function decompileAPK(file_id){
     var command = apk_tool+" d "+input_file+" -fo "+output_folder;
     console.log(command);
     const child = exec(command,function(error, stdout, stderr) {
-            console.log("stdout: "+stdout);
-            console.log("stderr: "+stderr);
+            //console.log("stdout: "+stdout);
+            //console.log("stderr: "+stderr);
             if (error !== null) {
                 console.log("exec error: error"+error);
             }else{
@@ -94,8 +125,10 @@ function runSA(file_id,apk_input_folder){
     PythonShell.run('mfg_generator.py', options, function (err, results) {
         if (err) return err;
         // results is an array consisting of messages collected during execution
+        //console.log("**************************************************************************************")
         //console.log('results: '+ results);
-        console.log("Load the result from "+output_file+" and push to DB.");
+        //console.log("**************************************************************************************")
+        //console.log("Load the result from "+output_file+" and push to DB.");
         fs.readFile(output_file, 'utf8', function(err, contents) {
             //console.log(contents);
             updateSAinDB(file_id,true,contents);
@@ -103,24 +136,48 @@ function runSA(file_id,apk_input_folder){
     });
 }
 
-function runSIG(file_id,input_file,output_folder){
+function runSIG(file_id,apk_input_folder){
+    var SIG_script_location = config.SIG_script_location;
+    var SIG_output_location = config.SIG_output_location;
+    //console.log(SIG_script_location);
+    //console.log(SIG_output_location);
+    //console.log(apk_input_folder);
+    var options = {
+        scriptPath: SIG_script_location,
+        args: [apk_input_folder, SIG_output_location]
+    };
+    PythonShell.run('get_field_type.py', options, function (err, results) {
+        if (err) return err;
+        var output_file = SIG_output_location+"/"+file_id+"_arff_output_complex.arff";
+        console.log("File Name: "+output_file);
+        fs.readFile(output_file, 'utf8', function(err, contents) {
+            //console.log("File ***************************"+contents);
+            if(contents === undefined)
+                contents = "NO SIG output.";
+            updateSIGinDB(file_id,true,contents);
+            deleateAllFilesCreated(file_id);
+        });
+    });
+}
 
+function deleateAllFilesCreated(file_id){
+    //TODO: deleate all files created for both SA and SIG
 }
 
 function updateSAinDB(id,status,report){
     //update SA in Database
-    console.log("update SA in Database"+id+" "+status+" "+report);
+    //console.log("update SA in Database"+id+" "+status+" "+report);
     Apk.update({_id:id},{$set:{isSA_done:status,SA_report:report}},function(err,data){
         if (err) return err;
-        console.log('The response from Mongo was ', data);
+        console.log('update SA in Database: The response from Mongo was ', data);
     });
 }
 
 function updateSIGinDB(id,status,report){
     //update SIG in Database
-    console.log("update SIG in Database"+id+" "+status+" "+report);
+    //console.log("update SIG in Database"+id+" "+status+" "+report);
     Apk.update({_id:id},{$set:{isSIG_done:status,SIG_report:report}},function(err,data){
         if (err) return err;
-        console.log('The response from Mongo was ', data);
+        console.log('update SIG in Database: The response from Mongo was ', data);
     });
 }

@@ -52,7 +52,9 @@ class Feature_Generator:
         self.INPUT_TYPES_FILE = os.path.join(os.path.dirname(__file__), self.INPUT_TYPES_FILE_NAME)
         self.INPUT_TYPES_HEX_FILE = os.path.join(os.path.dirname(__file__), 'const_data/type_variation_hex')
         self.COMPLEX_INPUT_TYPES_FILE = os.path.join(os.path.dirname(__file__),self.COMPLEX_INPUT_TYPES_FILE_NAME)
-                
+
+        print "Feature Generator output_file " +output_file
+        #print "Feature Generator sample_threshold " +sample_threshold
         self.output_file = output_file
         self.sample_threshold = sample_threshold
         
