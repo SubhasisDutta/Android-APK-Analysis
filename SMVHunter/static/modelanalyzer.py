@@ -62,13 +62,13 @@ def check_model(code_block, file_name):
     vuln = False
     if len(code_block) == 1:
         if code_block[0] == "return-void":
-            print "vulnerable by model noop %s" % file_name
+            #print "vulnerable by model noop %s" % file_name
             vuln = True
     else: #others
         code = "".join(code_block)
         for i, model in enumerate(models):
             if model in code:
-                print "vulnerable by model %i %s"  % (i, file_name)
+                #print "vulnerable by model %i %s"  % (i, file_name)
                 vuln = True
                 break
     return vuln

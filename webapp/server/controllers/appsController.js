@@ -40,10 +40,51 @@ exports.getSAReport = function(req,res){
             res.status(400);
             return res.send({reason:err.toString()});
         }
+        var report= JSON.parse(appData.SA_report);
+        var is_vulnerable=report["is_velnerable"];
+        var vulnerable="NOT VULNERABLE";
+        if(is_vulnerable){
+            vulnerable= "VULNERABLE";
+        }
+        var trust_manager=report["trust_manager"];
+        var seeds=report["seeds"];
+        var v_end_points=report["v_end_points"];
+        var apk_package=report["apk_package"];
+        var files_vernalable=report["files_vernalable"];
+        var file_location = report["apk_location"];
+        var fv=[];
+        for(var f in files_vernalable){
+            var s= files_vernalable[f].replace(file_location,"");
+            fv.push(s);
+        }
+
         var responceObj ={
             _id: appData._id,
             title : appData.title,
-            SA_report: appData.SA_report
+            apk_status: vulnerable,
+            trust_manager:trust_manager,
+            seeds:seeds,
+            v_end_points:v_end_points,
+            apk_package:apk_package,
+            files_vernalable:fv
+
+        };
+        res.send(responceObj);
+    });
+};
+
+exports.getSAReportFile = function(req,res){
+    Apk.findOne({_id:req.params._id}).exec(function(err, appData) {
+        if(err){
+            res.status(400);
+            return res.send({reason:err.toString()});
+        }
+        var full_report = appData.SA_report;
+        res.set('Content-Type', 'application/json');
+        var responceObj ={
+            _id: appData._id,
+            title : appData.title,
+            SA_report: full_report
         };
         res.send(responceObj);
     });
@@ -117,7 +158,7 @@ function decompileAPK(file_id){
 function runSA(file_id,apk_input_folder){
     var SA_script_location = config.SA_script_location;
     var SA_output_location = config.SA_output_location;
-    var output_file = SA_output_location+"/"+file_id+".db";
+    var output_file = SA_output_location+"/"+file_id+".json";
     var options = {
         scriptPath: SA_script_location,
         args: [apk_input_folder, output_file,SA_script_location]
@@ -167,6 +208,7 @@ function deleateAllFilesCreated(file_id){
 function updateSAinDB(id,status,report){
     //update SA in Database
     //console.log("update SA in Database"+id+" "+status+" "+report);
+    //console.log(JSON.parse(report))
     Apk.update({_id:id},{$set:{isSA_done:status,SA_report:report}},function(err,data){
         if (err) return err;
         console.log('update SA in Database: The response from Mongo was ', data);

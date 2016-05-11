@@ -1,5 +1,100 @@
 .container
-  h1 Static Analysis Report for {{report.title}}
+  h1 Static Analysis Report
+  .row
+    .col-md-8
+      h3 APK       : {{report.title}}
+      h4 APK Package: {{report.apk_package}}
+      h4 Full JSON Report :
+        a(href="/api/sareportFile/{{report._id}}",target="_blank") View
+    .col-md-4
+      .panel.panel-primary
+        .panel-heading Results
+        .panel-body
+          h2 APK Status : {{report.apk_status}}
+
+  .row
+    .col-md-6
+      table.table.table-hover.table-striped.table-condensed
+        thead
+          tr
+            th Trust Managers
+        tbody
+          tr(ng-repeat="tm in report.trust_manager")
+            td {{tm}}
+    .col-md-6
+      table.table.table-hover.table-striped.table-condensed
+        thead
+          tr
+            th Seeds
+        tbody
+          tr(ng-repeat="seed in report.seeds")
+            td {{seed}}
   .row
     .col-md-12
-      p {{report.SA_report}}
+      table.table.table-hover.table-striped.table-condensed
+        thead
+          tr
+            th Vulnerabile File
+        tbody
+          tr(ng-repeat="fv in report.files_vernalable")
+            td {{fv}}
+  .row
+    .col-md-12
+      h3 Vulnerable Endpoints
+        a(href="/data/d3-tree-template.html?id={{report._id}}",target="_blank") View Tree
+      table.table.table-hover.table-striped.table-condensed
+        thead
+          tr
+            th Seed
+            th Method Name
+            th V Type
+          tbody
+            tr(ng-repeat="ep in report.v_end_points")
+              td {{ep.seed}}
+              td {{ep.meth_nm}}
+              td {{ep.v}}
+  .row
+    .col-md-12
+      h4 JSON Report Description
+      table.table.table-hover.table-striped.table-condensed
+        thead
+          tr
+            th Key
+            th Value Description
+        tbody
+          tr
+            td apk_package
+            td APK Package Name
+          tr
+            td is_velnerable
+            td Provides a boolean Status about the APK Vulnerability
+          tr
+            td trust_manager
+            td List of Trust managers
+          tr
+            td seeds
+            td List of SEEDS
+          tr
+            td v_end_points
+            td Contains a list of vulnerabile end points (seed,meth_nm,v)
+          tr
+            td v_end_points
+            td Contains a list of vulnerabile end points (seed,meth_nm,v)
+          tr
+            td files_vernalable
+            td list of smali files that have vulnerabile points
+          tr
+            td traverse_nodes
+            td Traverse node Tree nodes
+          tr
+            td seed_nodes
+            td The Seed nodes list
+          tr
+            td methods_set
+            td Array of METHODS
+          tr
+            td manifest
+            td Contains all the MANIFEST (Method and Tag) present in the APK.
+          tr
+            td method_tree
+            td Contains an array of all the method nodes in the APK.

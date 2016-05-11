@@ -23,6 +23,7 @@ module.exports = function(app) {
 
   app.get('/api/sareport/:_id',auth.requiresApiLogin,appsController.getSAReport);
   app.get('/api/sigreport/:_id',auth.requiresApiLogin,appsController.getSIGReport);
+  app.get('/api/sareportFile/:_id',auth.requiresApiLogin,appsController.getSAReportFile);
 
   app.get('/partials/*', function(req, res) {
     res.render('../../public/app/' + req.params[0]);
