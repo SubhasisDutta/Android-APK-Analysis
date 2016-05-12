@@ -28,7 +28,8 @@
             th Seeds
         tbody
           tr(ng-repeat="seed in report.seeds")
-            td {{seed}}
+            td {{seed}} &nbsp;
+               a(href="/data/d3-tree-template.html?id={{report._id}}&seed={{seed}}",target="_blank") View Tree
   .row
     .col-md-12
       table.table.table-hover.table-striped.table-condensed
@@ -41,7 +42,6 @@
   .row
     .col-md-12
       h3 Vulnerable Endpoints
-        a(href="/data/d3-tree-template.html?id={{report._id}}",target="_blank") View Tree
       table.table.table-hover.table-striped.table-condensed
         thead
           tr
@@ -78,8 +78,8 @@
             td v_end_points
             td Contains a list of vulnerabile end points (seed,meth_nm,v)
           tr
-            td v_end_points
-            td Contains a list of vulnerabile end points (seed,meth_nm,v)
+            td seed_trees
+            td Contains a array of seed_tree
           tr
             td files_vernalable
             td list of smali files that have vulnerabile points

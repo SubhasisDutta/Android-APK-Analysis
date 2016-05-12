@@ -13,7 +13,7 @@
     }
 
     .node text {
-        font: 10px sans-serif;
+        font: 16px sans-serif;
     }
 
     .link {
@@ -28,7 +28,7 @@
 <script>
 
     var margin = {top: 20, right: 120, bottom: 20, left: 120},
-            width = 960 - margin.right - margin.left,
+            width = 1800 - margin.right - margin.left,
             height = 800 - margin.top - margin.bottom;
 
     var i = 0,
@@ -48,9 +48,13 @@
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var file_id=getParameterByName('id');
+    var seed_id=getParameterByName('seed');
     console.log(file_id);
+    console.log(seed_id);
 
-    d3.json("/data/flare.json?id="+file_id, function(error, flare) {
+    var url_data ="/api/satree/"+file_id+"/"+seed_id; //  /data/flare.json
+
+    d3.json(url_data, function(error, flare) {
         if (error) throw error;
 
         root = flare;

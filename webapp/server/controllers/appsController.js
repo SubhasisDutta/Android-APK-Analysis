@@ -90,6 +90,31 @@ exports.getSAReportFile = function(req,res){
     });
 };
 
+exports.getSAReportTree = function(req,res){
+    Apk.findOne({_id:req.params._id}).exec(function(err, appData) {
+        console.log(req.params._id);
+        if(err){
+            res.status(400);
+            return res.send({reason:err.toString()});
+        }
+        var report= JSON.parse(appData.SA_report);
+        var seed_trees = report["seed_trees"];
+        console.log(req.params._seedId);
+        //console.log(seed_trees);
+        var responceObj = {};
+        for(var i in seed_trees){
+            var s = seed_trees[i];
+            console.log(s["name"]);
+            if(s["name"] === req.params._seedId){
+                responceObj=s;
+                break;
+            }
+        }
+        res.set('Content-Type', 'application/json');
+        res.send(responceObj);
+    });
+};
+
 exports.getSIGReport = function(req,res){
     Apk.findOne({_id:req.params._id}).exec(function(err, appData) {
         if(err){

@@ -140,6 +140,7 @@ def traverse(apk,seed, node, seen):
     #print node.parents
     #print "Traversing : ",node.toJson()
     traversed_nodes.append(node.toJson())
+    childrens=[]
 
     #this will handle the case where we register callbacks to the jvm like
     #a socketfactory which does not get called directly so we dont have any
@@ -151,14 +152,38 @@ def traverse(apk,seed, node, seen):
                 #method is never called. Continue traversing from its class' constructor
                 #print meth_nm
                 seen.add(meth_nm)
-                traverse(apk,seed, NODES[meth_nm], seen)
+
+                child = {}
+                child["name"]=meth_nm.replace("/", ".").replace("-><init>()V","").replace(";","")
+                if len(child["name"]) > 20:
+                    child["name"]=child["name"][-20:]
+                child["full_name"]=meth_nm.replace("/", ".")
+                child_children = traverse(apk,seed, NODES[meth_nm], seen)
+                if len(child_children) > 0:
+                    child["children"] = child_children
+                childrens.append(child)
             elif meth_nm in seen:
                 # method is a constructor that is never called; report it as an entry point
+                child = {}
+                child["name"]=meth_nm.replace("/", ".").replace("-><init>()V","").replace(";","")
+                if len(child["name"]) > 20:
+                    child["name"]=child["name"][-20:]
+                child["full_name"]=meth_nm.replace("/", ".")
                 find_key_from_xml(apk,destination_file, seed, meth_nm)
+                childrens.append(child)
     else:
         for parent in node.parents:
+            child={}
+            child["name"]=parent.replace("/", ".").replace("-><init>()V","").replace(";","")
+            if len(child["name"]) > 20:
+                child["name"]=child["name"][-20:]
+            child["full_name"]=parent.replace("/", ".")
             p_node = NODES[parent]
-            traverse(apk,seed, p_node, seen)
+            child_children = traverse(apk,seed, p_node, seen)
+            if len(child_children)>0:
+                child["children"]=child_children
+            childrens.append(child)
+    return childrens
 
 #Output
 #sample format
@@ -252,20 +277,33 @@ if __name__ == '__main__':
     file_dictionary["methods_set"]=list(METHODS)
     print "%d TM and SEED %d apk %s"  % (len(TM), len(SEEDS), root) #TM - trust manager
     file_dictionary["trust_manager"]=TM
-    file_dictionary["seeds"]=SEEDS
+    file_seeds=[]
+    for s in SEEDS:
+        s=s.replace("/", ".")
+        file_seeds.append(s)
+    file_dictionary["seeds"]=file_seeds
     file_dictionary["files_vernalable"]=list(file_velnerable)
 
     #yay result.. :p
     seed_nodes=[]
     seed_node_dict={}
+    seed_trees=[]
     for seed in SEEDS:
+        seed_tree={}
+        seed_tree["name"]=seed.replace("/", ".")
         print "seed %s" % seed
         node = NODES[seed]
         #print "seed node: ",node.toJson()
         seed_nodes.append(node.toJson())
         traversed_nodes=[]
-        traverse(root,seed, node, set())
+        seed_childrens=traverse(root,seed, node, set())
+        if len(seed_childrens)>0:
+            seed_tree["children"]=seed_childrens
+        seed_trees.append(seed_tree)
         seed_node_dict[seed]=traversed_nodes
+        #print seed_tree
+
+    file_dictionary["seed_trees"]=seed_trees
 
     file_dictionary["traverse_nodes"]=seed_node_dict
     file_dictionary["seed_nodes"]=seed_nodes
