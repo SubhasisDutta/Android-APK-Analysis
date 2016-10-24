@@ -7,11 +7,11 @@ module.exports = {
     rootPath: rootPath,
     port: process.env.PORT || 3030,
     uploadAPKLocation: 'C:\\FileRepo\\apkupload',
-    apkTool: 'C:\\Workspace\\Github\\AndroidAPKAnalysis\\apktool\\apktool',
+    apkTool: 'C:\\Github\\AndroidAPKAnalysis\\apktool\\apktool',
     apkDecompileLocation: 'C:\\FileRepo\\apkupload',//'C:\\FileRepo\\apkdecompile',
-    SA_script_location: 'C:\\Workspace\\Github\\AndroidAPKAnalysis\\SMVHunter\\static',
+    SA_script_location: 'C:\\Github\\AndroidAPKAnalysis\\SMVHunter\\static',
     SA_output_location: 'C:\\FileRepo\\saoutput',
-    SIG_script_location: 'C:\\Workspace\\Github\\AndroidAPKAnalysis\\smartInputGeneration',
+    SIG_script_location: 'C:\\Github\\AndroidAPKAnalysis\\smartInputGeneration',
     SIG_output_location: 'C:\\FileRepo\\sigoutput'
   },
   production: {
