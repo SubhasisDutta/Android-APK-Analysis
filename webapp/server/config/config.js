@@ -12,7 +12,8 @@ module.exports = {
     SA_script_location: 'C:\\Github\\AndroidAPKAnalysis\\SMVHunter\\static',
     SA_output_location: 'C:\\FileRepo\\saoutput',
     SIG_script_location: 'C:\\Github\\AndroidAPKAnalysis\\smartInputGeneration',
-    SIG_output_location: 'C:\\FileRepo\\sigoutput'
+    SIG_output_location: 'C:\\FileRepo\\sigoutput',
+    play_category_finder: 'https://play.google.com/store/apps/details?id='
   },
   production: {
     rootPath: rootPath,
@@ -24,6 +25,7 @@ module.exports = {
     SA_script_location: '/home/bitnami/AndroidAPKAnalysis/SMVHunter/static',
     SA_output_location: '/home/bitnami/file_repo/saoutput',
     SIG_script_location: '/home/bitnami/AndroidAPKAnalysis/smartInputGeneration',
-    SIG_output_location: '/home/bitnami/file_repo/sigoutput'
+    SIG_output_location: '/home/bitnami/file_repo/sigoutput',
+    play_category_finder: 'https://play.google.com/store/apps/details?id='
   }
 }

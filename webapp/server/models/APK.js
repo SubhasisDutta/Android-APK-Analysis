@@ -8,6 +8,7 @@ var apkSchema = mongoose.Schema({
   username: {type: String,required: '{PATH} is required!'},
   SA_report : {type : String},
   SIG_report : {type : String},
+  apk_category: {type: String},
   tags: [String]
 });
 
