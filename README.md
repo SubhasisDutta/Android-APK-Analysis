@@ -1,2 +1,2 @@
 # Android-APK-Analysis
-Application to upload and analyse Android Apps 
+This app helps in performing static analysis of Android Apps. Upload and analyze APK files to find the security vulnerability that may exist.
